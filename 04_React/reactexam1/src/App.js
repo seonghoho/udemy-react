@@ -3,13 +3,14 @@ import React from 'react';
 
 import MyHeader from './Myheader';
 import MyFooter from './Myfooter';
+import Counter from './Counter';
 
 function App() {
   let name = '최성호';
 
   const style = {
     App: {
-      backgroundColor: "black",
+      backgroundColor: "white",
     },
     h2: {
       color:"red",
@@ -40,6 +41,8 @@ function App() {
     {/* 인라인 스타일 적용하는 법 */}
     <div style={style.App}>
       <MyHeader/>
+      <Counter/>
+
         <h2 style={style.h2}>안녕 리액트 {func()}
         <p>{name} 입니다.</p>
         </h2>
