@@ -4,6 +4,7 @@ import React from 'react';
 import MyHeader from './Myheader';
 import MyFooter from './Myfooter';
 import Counter from './Counter';
+import Container from './Container';
 
 function App() {
   let name = '최성호';
@@ -26,7 +27,18 @@ function App() {
 
   const number = 5;
 
+  const counterProps = {
+    a:1,
+    b:2,
+    c:3,
+    d:4,
+    e:5,
+    initialValue:5,
+  };
+
   return (
+    <Container>
+
     <React.Fragment>
     {/* css 파일을 사용해서 적용하는 방법 */}
     {/* <div className="App">
@@ -41,7 +53,7 @@ function App() {
     {/* 인라인 스타일 적용하는 법 */}
     <div style={style.App}>
       <MyHeader/>
-      <Counter/>
+      <Counter {...counterProps}/>
 
         <h2 style={style.h2}>안녕 리액트 {func()}
         <p>{name} 입니다.</p>
@@ -53,7 +65,10 @@ function App() {
 
       <MyFooter/>
     </div>
+
   </React.Fragment>
+
+  </Container>
   );
 }
 
