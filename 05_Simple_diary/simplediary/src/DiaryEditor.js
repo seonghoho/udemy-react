@@ -1,18 +1,74 @@
 import { useState } from "react";
 
 const DiaryEditor = () => {
-    const [author, setAuthor] = useState("");
+
+    // 기존 useState 사용 방식에서 하나로 줄인다면?
+    // const [author, setAuthor] = useState("");
+    // const [content, setContent] = useState("");
+
+    const [state, setState] = useState({
+        author: "",
+        content: "",
+        // 각각의 프로퍼티를 생성한 것이다.
+        emotion: 1,
+    });
+
+    const handleChangeState = (e) => {
+        console.log(e.target.value);
+        console.log(e.target.name);
+
+        setState({
+            ...state,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = () => {
+        console.log(state);
+        alert("저장 성공");
+    };
+
 
     return (
         <div className="DiaryEditor">
             <h2>오늘의 일기</h2>
             <div>
                 <input 
-                    value={author} 
-                    onChange={(e) => {
-                        console.log(e.target.value);
-                        setAuthor(e.target.value);
-                }}/>
+                    name="author"
+                    value={state.author} 
+                    onChange={handleChangeState}
+                />
+            </div>
+            <div>
+                <textarea 
+                    value={state.content}
+                    name="content"
+                    // onChange={(e) => {
+                    //     setState({
+                    //         ...state,
+                    //         author: e.target.value,
+                    //     });
+                    onChange={handleChangeState}
+                />
+            </div>
+
+            {/* 감정 점수 */}
+            <div>
+                <select 
+                    name="emotion" 
+                    value={state.emotion} 
+                    onChange={handleChangeState}
+                >
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                </select>
+            </div>
+
+            <div>
+                <button onClick={handleSubmit}>일기 저장하기</button>
             </div>
         </div>
     );
