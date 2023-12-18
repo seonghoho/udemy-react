@@ -1,13 +1,11 @@
 import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
-import {useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import React, {useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 // import OptimizeTest from './OptimizeTest';
 // import Lifecycle from './Lifecycle';
 
 // https://jsonplaceholder.typicode.com/comments
-
-const App = () => {
 
   // const [data, setData] = useState([]);
 
@@ -34,7 +32,7 @@ const App = () => {
       // 기존 state에서 map함수를 사용해 targetId와 일치하는 요소를 찾은 다음, 
       // 그 요소의 값은 content만 new content로 수정해주고, 나머지는 다시 돌려주고 
       // 그 요소를 합쳐서 새로운 배열을 만들어서 새로운 state에 보내기 때문에 정상적으로 수행할 수 있다.
-      
+
       case "EDIT": {
         return state.map((it)=> 
         it.id === action.targetId ? 
@@ -44,9 +42,13 @@ const App = () => {
       default :
       return state;
     }
-  }
+  };
 
+export const DiaryStateContext = React.createContext();
 
+export const DiaryDispatchContext = React.createContext();
+
+const App = () => {
   const [data, dispatch] = useReducer(reducer, [])
 
 
@@ -121,6 +123,14 @@ const App = () => {
     // );
   }, []);
 
+
+  //useMemo를 사용해서 재사용되어도 재생성되지 않게 만든다.
+  // 최적화가 풀리지 않게 한다.
+  const memoizedDispatches = useMemo(()=>{
+    return {onCreate, onRemove, onEdit}
+  }, [])
+
+
   const getDiaryAnalysis = useMemo(
     () => {
     // console.log("일기 분석 시작");
@@ -135,16 +145,20 @@ const App = () => {
   const {goodCount, badCount, goodRatio} = getDiaryAnalysis;
 
   return (
-    <div className="App">
-      {/* <Lifecycle /> */}
-      {/* <OptimizeTest/> */}
-      <DiaryEditor onCreate={onCreate} />
-      <div>전체 일기 : {data.length}</div>
-      <div>기분 좋은 일기 개수 : {goodCount}</div>
-      <div>기분 나쁜 일기 개수 : {badCount}</div>
-      <div>기분 좋은 일기 비율 : {goodRatio}</div>
-      <DiaryList onEdit={onEdit} onRemove={onRemove} diaryList={data} />
-    </div>
+    <DiaryStateContext.Provider value={data}>
+      <DiaryDispatchContext.Provider value={memoizedDispatches}>
+        <div className="App">
+          {/* <Lifecycle /> */}
+          {/* <OptimizeTest/> */}
+          <DiaryEditor />
+          <div>전체 일기 : {data.length}</div>
+          <div>기분 좋은 일기 개수 : {goodCount}</div>
+          <div>기분 나쁜 일기 개수 : {badCount}</div>
+          <div>기분 좋은 일기 비율 : {goodRatio}</div>
+          <DiaryList />
+        </div>
+      </DiaryDispatchContext.Provider>
+    </DiaryStateContext.Provider>
   );
 }
 
