@@ -1,13 +1,13 @@
 import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
-import {useEffect, useMemo, useRef, useState} from 'react';
-import OptimizeTest from './OptimizeTest';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+// import OptimizeTest from './OptimizeTest';
 // import Lifecycle from './Lifecycle';
 
 // https://jsonplaceholder.typicode.com/comments
 
-function App() {
+const App = () => {
 
   const [data, setData] = useState([]);
 
@@ -36,7 +36,8 @@ function App() {
   },[]);
 
   // 게시글 생성
-  const onCreate = (author, content, emotion) => {
+  const onCreate = useCallback(
+    (author, content, emotion) => {
     const created_date = new Date().getTime();
     const newItem = {
       author,
@@ -47,8 +48,11 @@ function App() {
     }
     dateId.current += 1;
     // newItem을 먼저 적으면 작성한 게시글이 위로 가게 만들 수 있다.
-    setData([newItem, ...data])
-  };
+    // 인자로 데이터를 받아서 아이템을 추가한 데이터를 리턴하는 콜백함수를 setData에 전달할 것이다.
+    setData((data)=>[newItem, ...data])
+  }, 
+  
+  []);
 
   // 게시글 삭제
   const onRemove = (targetId) => {

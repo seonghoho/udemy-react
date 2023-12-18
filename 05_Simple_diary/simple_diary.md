@@ -284,3 +284,31 @@ const areEqual = (prevProps, nextProps)=>{
 
 const MemoizedCounterB = React.memo(CounterB, areEqual);
 ```
+
+
+## useCallback
+
+- https://ko.legacy.reactjs.org/docs/hooks-reference.html#usecallback
+- 메모이제이션된  콜백함수를 반환한다.
+
+### []를 넣어 mount될 때만 데이터를 전달하고, 다음부터는 그 함수를 재사용한다.
+```js
+  const onCreate = useCallback(
+    (author, content, emotion) => {
+    const created_date = new Date().getTime();
+    const newItem = {
+      author,
+      content,
+      emotion,
+      created_date,
+      id : dateId.current
+    }
+    dateId.current += 1;
+    // newItem을 먼저 적으면 작성한 게시글이 위로 가게 만들 수 있다.
+    // 인자로 데이터를 받아서 아이템을 추가한 데이터를 리턴하는 콜백함수를 setData에 전달할 것이다.
+    setData((data)=>[newItem, ...data])
+  }, 
+  
+  []);
+```
+
