@@ -218,6 +218,69 @@ useEffect(()=>{
 - 사람은 답을 외우기 보다는 해결할 수 있는 능력을 키우는 위주로 학습
 - 컴퓨터는 나올 수 있는 모든 문제의 답을 외워버림 (Memoization)
 
-### useMemo 
+## useMemo 
 
 - 연산 최적화를 위한 함수
+- https://ko.legacy.reactjs.org/docs/react-api.html#reactmemo
+
+### 본인이 수정될 때만 수정된다. 고차 컴포넌트
+```jsx
+import React, {useState, useEffect} from 'react';
+
+const Textview = React.memo(({text}) => {
+    useEffect(()=>{
+        console.log(`Update :: Text : ${text}`);
+    });
+    return <div>{text}</div>
+});
+
+const Countview = React.memo(({count})=> {
+    useEffect(()=>{
+        console.log(`Update :: Count : ${count}`);
+    });
+    return <div>{count}</div>
+})
+
+const OptimizeTest = () => {
+    const [count, setCount] = useState(1);
+    const [text, setText] = useState("");
+
+    return (
+        <div style={{ padding: 50 }}>
+            <div>
+                <h2>count</h2> 
+                <Countview count={count}/>
+                <button onClick={()=>setCount(count+1)}>+</button>
+            </div>
+            <div>
+                <h2>text</h2>
+                <Textview text={text}/>
+                <input value={text} onChange={(e) => setText(e.target.value)} />
+            </div>
+        </div>
+    )
+};
+
+export default OptimizeTest;
+
+```
+
+### React.memo는 얕은 복사를 한다.
+
+깊은 복사로 코드를 만들면 된다.
+
+```js
+const areEqual = (prevProps, nextProps)=>{
+    // return true // 이전 프롭스 현재 프롭스가 같다는 뜻 => 리렌더링을 일으키지 않게 된다
+    // return false // 이전과 현재가 다르다 => 리렌더링을 일으키라는 뜻
+
+    if(prevProps.obj.count === nextProps.obj.count){
+        return true;
+    }
+    return false;
+
+    // return prevProps.obj.count === nextProps.obj.count; 이렇게 해도 된다.
+}
+
+const MemoizedCounterB = React.memo(CounterB, areEqual);
+```

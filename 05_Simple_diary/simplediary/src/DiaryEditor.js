@@ -17,8 +17,8 @@ const DiaryEditor = ({onCreate}) => {
     });
 
     const handleChangeState = (e) => {
-        console.log(e.target.value);
-        console.log(e.target.name);
+        // console.log(e.target.value);
+        // console.log(e.target.name);
 
         setState({
             ...state,
@@ -42,9 +42,9 @@ const DiaryEditor = ({onCreate}) => {
         };
 
         onCreate(state.author, state.content, state.emotion);
-        console.log(state);
+        // console.log(state);
         alert("저장 성공");
-        
+
         // 저장 후 입력창 초기화
         setState({
             author: "",
