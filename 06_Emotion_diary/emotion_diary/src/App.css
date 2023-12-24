@@ -37,10 +37,75 @@ body {
   padding-right: 20px;
 }
 
-/* .App {
-  padding: 20px;
+/* MyButton */
 
-  font-family: 'Yeon Sung', cursive;
-  font-family: 'Nanum Pen Script', cursive;
+.MyButton {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
 
-} */
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  font-size: 20px;
+
+  /* 버튼 안 글자가 잘려서 두 줄이 되지 않도록 돕는 코드 */
+  white-space: nowrap;
+  font-family: "Nanum Pen Script";
+}
+
+.MyButton_default {
+  background-color: #ececec;
+  color: black;
+}
+
+.MyButton_positive {
+  background-color: #64c964;
+  color: white;
+}
+
+.MyButton_negative {
+  background-color: #fd565f;
+  color: white;
+}
+
+/* header */
+
+header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  /* 가로축으로 나열하기 위함 */
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+header > div {
+  display: flex;
+}
+
+header .head_text {
+  width: 50%;
+  font-size: 25px;
+  /* 가운데로 옴 */
+  justify-content: center;
+}
+
+header .head_btn_left {
+  width: 25%;
+  /* 왼쪽에 붙음 */
+  justify-content: start;
+}
+
+header .head_btn_right {
+  width: 25%;
+  justify-content: end;
+}
+
+header .button {
+  font-family: "Nanum Pen Script";
+}
+
