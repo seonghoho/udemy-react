@@ -1,3 +1,46 @@
-.App {
-  padding: 20px;
+/* font 연성, 나눔펜 */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Yeon+Sung&display=swap');
+
+body {
+  background-color: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  /* display flex일 때 세로축 기준으로 가운데에 두겠다는 뜻.  */
+  align-items: center;
+  font-family: "Nanum Pen Script";
+  /* vh = view port height, 현재 웹 스크린의 실제 크기의 100퍼센트를 실제 크기로 가지겠다는 뜻. */
+  min-height: 100vh;
+  margin: 0px;
 }
+
+/* ()의 조건일 때만 적용하는 media 쿼리 */
+@media (min-width : 650px) {
+    .App {
+      width : 640px;
+    }
+}
+
+@media (max-width : 650px) {
+  .App {
+    width : 90vw;
+  }
+}  
+
+#root {
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.App {
+  min-height: 100vh;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* .App {
+  padding: 20px;
+
+  font-family: 'Yeon Sung', cursive;
+  font-family: 'Nanum Pen Script', cursive;
+
+} */
