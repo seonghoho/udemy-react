@@ -44,6 +44,38 @@ const reducer = (state, action ) => {
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
+const dummyData = [
+  {
+    id:1,
+    emotion:1,
+    content:"오늘의 일기 1번",
+    date: 1703596553817,
+  },
+  {
+    id:2,
+    emotion:2,
+    content:"오늘의 일기 2번",
+    date: 1703596553818,
+  },
+  {
+    id:3,
+    emotion:3,
+    content:"오늘의 일기 3번",
+    date: 1703596553819,
+  },
+  {
+    id:4,
+    emotion:4,
+    content:"오늘의 일기 4번",
+    date: 1703596553820,
+  },
+  {
+    id:5,
+    emotion:5,
+    content:"오늘의 일기 5번",
+    date: 1703596553821,
+  },
+]
 
 function App() {
 
@@ -51,7 +83,10 @@ function App() {
   // const env = process.env;
   // env.PUBLIC_URL = env.PUBLIC_URL || "";
 
-  const [data, dispatch] = useReducer(reducer,[])
+  const [data, dispatch] = useReducer(reducer,dummyData);
+
+  // 오늘의 날짜를 알아내는 방법
+  // console.log(new Date().getTime())
 
   const dataId =useRef(0);
   //CREATE
