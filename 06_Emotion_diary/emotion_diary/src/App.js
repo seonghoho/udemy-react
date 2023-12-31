@@ -1,35 +1,35 @@
-import React, { useRef, useReducer } from 'react';
+import React, { useRef, useReducer } from "react";
 
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import RouteTest from './components/RouteTest';
 
-import Home from './pages/Home';
-import New from './pages/New';
-import Edit from './pages/Edit';
-import Diary from './pages/Diary';
+import Home from "./pages/Home";
+import New from "./pages/New";
+import Edit from "./pages/Edit";
+import Diary from "./pages/Diary";
 
 // COMPONENTS
-import MyButton from './components/MyButton';
-import MyHeader from './components/MyHeader';
+import MyButton from "./components/MyButton";
+import MyHeader from "./components/MyHeader";
 
 const reducer = (state, action) => {
   let newState = [];
   switch (action.type) {
-    case 'INIT': {
+    case "INIT": {
       return action.data;
     }
-    case 'CREATE': {
+    case "CREATE": {
       newState = [action.data, ...state];
       break;
     }
-    case 'REMOVE': {
+    case "REMOVE": {
       newState = state.filter((it) => it.id !== action.targetId);
       break;
     }
-    case 'EDIT': {
+    case "EDIT": {
       newState = state.map((it) =>
-        it.id === action.data.id ? { ...action.data } : it,
+        it.id === action.data.id ? { ...action.data } : it
       );
       break;
     }
@@ -46,31 +46,31 @@ const dummyData = [
   {
     id: 1,
     emotion: 1,
-    content: '오늘의 일기 1번',
+    content: "오늘의 일기 1번",
     date: 1703596553817,
   },
   {
     id: 2,
     emotion: 2,
-    content: '오늘의 일기 2번',
+    content: "오늘의 일기 2번",
     date: 1703596553818,
   },
   {
     id: 3,
     emotion: 3,
-    content: '오늘의 일기 3번',
+    content: "오늘의 일기 3번",
     date: 1703596553819,
   },
   {
     id: 4,
     emotion: 4,
-    content: '오늘의 일기 4번',
+    content: "오늘의 일기 4번",
     date: 1703596553820,
   },
   {
     id: 5,
     emotion: 5,
-    content: '오늘의 일기 5번',
+    content: "오늘의 일기 5번",
     date: 1703596553821,
   },
 ];
@@ -90,7 +90,7 @@ function App() {
 
   const onCreate = (date, content, emotion) => {
     dispatch({
-      type: 'CREATE',
+      type: "CREATE",
       data: {
         id: dataId.current,
         date: new Date(date).getTime(),
@@ -103,13 +103,13 @@ function App() {
 
   //REMOVE
   const onRemove = (targetId) => {
-    dispatch({ type: 'REMOVE', targetId });
+    dispatch({ type: "REMOVE", targetId });
   };
 
   //EDIT
   const onEdit = (targetId, date, content, emotion) => {
     dispatch({
-      type: 'EDIT',
+      type: "EDIT",
       data: {
         id: targetId,
         date: new Date(date).getTime(),
@@ -130,7 +130,7 @@ function App() {
       >
         <BrowserRouter>
           <div className="App">
-            <MyHeader
+            {/* <MyHeader
               headText={'Header'}
               leftChild={
                 <MyButton
@@ -165,7 +165,7 @@ function App() {
               onClick={() => alert('버튼 클릭')}
               // default
               // type={"negative"}
-            />
+            /> */}
 
             {/* process.env.PUBLIC_URL로 적으면 public 폴더 안으로 들어간다 */}
             {/* <img src={process.env.PUBLIC_URL + `/assets/emotion1.png`} alt="" />
