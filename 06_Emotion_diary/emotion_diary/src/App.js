@@ -10,8 +10,8 @@ import Edit from "./pages/Edit";
 import Diary from "./pages/Diary";
 
 // COMPONENTS
-import MyButton from "./components/MyButton";
-import MyHeader from "./components/MyHeader";
+// import MyButton from "./components/MyButton";
+// import MyHeader from "./components/MyHeader";
 
 const reducer = (state, action) => {
   let newState = [];
@@ -177,7 +177,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/new" element={<New />} />
-              <Route path="/edit" element={<Edit />} />
+              <Route path="/edit/:id" element={<Edit />} />
               <Route path="/diary/:id" element={<Diary />} />
             </Routes>
             {/* <RouteTest/> */}

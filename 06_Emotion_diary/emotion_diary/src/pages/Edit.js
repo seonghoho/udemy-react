@@ -1,37 +1,38 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+
+import { useNavigate, useParams } from "react-router-dom";
+import { DiaryStateContext } from "../App";
+import DiaryEditor from "../components/DiaryEditor";
 
 const Edit = () => {
+  const [originData, setOriginData] = useState();
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-    // useNavigate() 함수는 경로를 옮기는 함수이다. 로그인 안했으면 로그인 페이지로 보내는 경우 사용
-    const navigate = useNavigate();
+  const diaryList = useContext(DiaryStateContext);
+  //   console.log(id);
+  //   console.log(diaryList);
 
-    // 
-    const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    if (diaryList.length >= 1) {
+      const targetDiary = diaryList.find(
+        (it) => parseInt(it.id) === parseInt(id)
+      );
+      console.log(targetDiary);
 
-    const id = searchParams.get('id');
-    console.log("id : ", id);
+      if (targetDiary) {
+        setOriginData(targetDiary);
+      } else {
+        navigate("/", { replace: true });
+      }
+    }
+  }, [id, diaryList]);
 
-    const mode = searchParams.get("mode");
-    console.log("mode : ", mode);
-
-
-    return (
-        <div>
-            <h1>Edit</h1>
-            <p>이 곳은 일기 수정 페이지 입니다.</p>
-            <button onClick={() => setSearchParams({ who : "winterlood" })}>QS 바꾸기</button>
-            <button onClick={() => {
-                navigate("/home");
-            }}>
-                HOME으로 가기
-            </button>
-            <button onClick={()=>{
-                navigate(-1)
-            }}>
-                뒤로가기
-            </button>
-        </div>
-    );
+  return (
+    <div>
+      {originData && <DiaryEditor isEdit={true} originData={originData} />}
+    </div>
+  );
 };
 
 export default Edit;
