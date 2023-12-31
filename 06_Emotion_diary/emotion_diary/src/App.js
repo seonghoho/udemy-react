@@ -85,7 +85,7 @@ function App() {
   // 오늘의 날짜를 알아내는 방법
   // console.log(new Date().getTime())
 
-  const dataId = useRef(0);
+  const dataId = useRef(6);
   //CREATE
 
   const onCreate = (date, content, emotion) => {
