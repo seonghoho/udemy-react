@@ -1,4 +1,4 @@
-import React, { useRef, useReducer } from "react";
+import React, { useRef, useReducer, useEffect } from "react";
 
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -36,56 +36,80 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+
+  localStorage.setItem("diary", JSON.stringify(newState));
   return newState;
 };
 
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-const dummyData = [
-  {
-    id: 1,
-    emotion: 1,
-    content: "오늘의 일기 1번",
-    date: 1703596553817,
-  },
-  {
-    id: 2,
-    emotion: 2,
-    content: "오늘의 일기 2번",
-    date: 1703596553818,
-  },
-  {
-    id: 3,
-    emotion: 3,
-    content: "오늘의 일기 3번",
-    date: 1703596553819,
-  },
-  {
-    id: 4,
-    emotion: 4,
-    content: "오늘의 일기 4번",
-    date: 1703596553820,
-  },
-  {
-    id: 5,
-    emotion: 5,
-    content: "오늘의 일기 5번",
-    date: 1703596553821,
-  },
-];
+// const dummyData = [
+//   {
+//     id: 1,
+//     emotion: 1,
+//     content: "오늘의 일기 1번",
+//     date: 1703596553817,
+//   },
+//   {
+//     id: 2,
+//     emotion: 2,
+//     content: "오늘의 일기 2번",
+//     date: 1703596553818,
+//   },
+//   {
+//     id: 3,
+//     emotion: 3,
+//     content: "오늘의 일기 3번",
+//     date: 1703596553819,
+//   },
+//   {
+//     id: 4,
+//     emotion: 4,
+//     content: "오늘의 일기 4번",
+//     date: 1703596553820,
+//   },
+//   {
+//     id: 5,
+//     emotion: 5,
+//     content: "오늘의 일기 5번",
+//     date: 1703596553821,
+//   },
+// ];
 
 function App() {
+  // useEffect(() => {
+  //   const item1 = localStorage.getItem("item1");
+  //   const item2 = localStorage.getItem("item2");
+  //   const item3 = JSON.parse(localStorage.getItem("item3"));
+  //   console.log({ item1, item2, item3 });
+  // }, []);
+
   // 이미지가 뜨지 않을 경우
   // const env = process.env;
   // env.PUBLIC_URL = env.PUBLIC_URL || "";
 
-  const [data, dispatch] = useReducer(reducer, dummyData);
+  const [data, dispatch] = useReducer(reducer, []);
+
+  useEffect(() => {
+    const localData = localStorage.getItem("diary");
+    if (localData) {
+      const diaryList = JSON.parse(localData).sort(
+        (a, b) => parseInt(b.id) - parseInt(a.id)
+      );
+      dataId.current = parseInt(diaryList[0].id) + 1;
+
+      console.log(diaryList);
+      console.log(dataId);
+
+      dispatch({ type: "INIT", data: diaryList });
+    }
+  }, []);
 
   // 오늘의 날짜를 알아내는 방법
   // console.log(new Date().getTime())
 
-  const dataId = useRef(6);
+  const dataId = useRef(0);
   //CREATE
 
   const onCreate = (date, content, emotion) => {
